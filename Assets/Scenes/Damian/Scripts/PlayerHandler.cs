@@ -1,28 +1,31 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerHandler : MonoBehaviour
+public class HorseMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float maxSpeed = 10f; // Maximum normal speed
     public float acceleration = 20f; // How fast the object accelerates
-    public float boostSpeed = 20f; // Maximum speed during boost
-    public float boostDuration = 2f; // How long the boost lasts
-    public float boostCooldown = 5f; // Cooldown after using boost
-    public float brakeForce = 25f; // How fast the object slows down when braking
-    public float reverseSpeed = 5f; // Speed when reversing
     public float turnSpeed = 5f; // How fast the object turns
 
+    [Header("Leg Settings")]
+    public Rigidbody frontLeftLeg; // Reference to the front left leg
+    public Rigidbody frontRightLeg; // Reference to the front right leg
+    public Rigidbody backLeftLeg; // Reference to the back left leg
+    public Rigidbody backRightLeg; // Reference to the back right leg
+    public float legSwingSpeed = 10f; // Speed of leg movement
+    public float legSwingAngle = 45f; // Maximum swing angle for legs
+
+    [Header("Ground Check Settings")]
+    public float groundCheckDistance = 0.1f; // Distance to check for ground
+    public LayerMask groundLayer; // Layer mask for ground objects
+
     private float currentSpeed = 0f;
-    private float boostTimer = 0f;
-    private float cooldownTimer = 0f;
-    private bool isBoosting = false;
+    private bool isGrounded = false;
 
     private Rigidbody rb;
     private PlayerInput playerInput;
     private InputAction xAxisAction;
-    private InputAction boostAction;
-    private InputAction brakeAction;
     private InputAction driveAction;
 
     private Vector2 movementInput; // Stores the XAxis input (Vector2)
@@ -43,43 +46,44 @@ public class PlayerHandler : MonoBehaviour
         }
 
         xAxisAction = playerInput.actions["XAxis"];
-        boostAction = playerInput.actions["Boost"];
-        brakeAction = playerInput.actions["Brake"];
         driveAction = playerInput.actions["Drive"];
     }
 
     void Update()
     {
-        HandleBoost();
+        CheckGrounded(); // Check if the player is grounded
     }
 
     void FixedUpdate()
     {
-        HandleMovement();
-        HandleTurning();
-        HandleBrake();
+        if (isGrounded) // Only allow movement if grounded
+        {
+            HandleMovement();
+            HandleTurning();
+            HandleLegMovement(); // Move the legs only when moving
+        }
+        else
+        {
+            // If not grounded, slow down naturally
+            currentSpeed = Mathf.Lerp(currentSpeed, 0f, 10f * Time.fixedDeltaTime);
+            rb.linearVelocity = transform.forward * currentSpeed;
+        }
     }
 
     void HandleMovement()
     {
         float driveInput = driveAction.ReadValue<float>(); // Drive input (forward/backward)
-        float targetSpeed = isBoosting ? boostSpeed : maxSpeed;
 
         // Determine the target speed based on drive input
         if (driveInput > 0)
         {
             // Accelerate forward
-            currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed * driveInput, acceleration * Time.fixedDeltaTime);
-        }
-        else if (driveInput < 0)
-        {
-            // Accelerate backward
-            currentSpeed = Mathf.Lerp(currentSpeed, -reverseSpeed * Mathf.Abs(driveInput), acceleration * Time.fixedDeltaTime);
+            currentSpeed = Mathf.Lerp(currentSpeed, maxSpeed * driveInput, acceleration * Time.fixedDeltaTime);
         }
         else
         {
             // No drive input, slow down naturally
-            currentSpeed = Mathf.Lerp(currentSpeed, 0f, brakeForce * Time.fixedDeltaTime);
+            currentSpeed = Mathf.Lerp(currentSpeed, 0f, 10f * Time.fixedDeltaTime);
         }
 
         // Move the object forward or backward
@@ -94,48 +98,43 @@ public class PlayerHandler : MonoBehaviour
         float turnInput = movementInput.x;
 
         // Smoothly rotate the object
-        Quaternion deltaRotation = Quaternion.Euler(0f, turnInput * turnSpeed, 0f);
+        Quaternion deltaRotation = Quaternion.Euler(0f, turnInput * turnSpeed * currentSpeed / maxSpeed, 0f);
         rb.MoveRotation(rb.rotation * deltaRotation);
     }
 
-    void HandleBoost()
+    void HandleLegMovement()
     {
-        if (boostAction.triggered && !isBoosting && cooldownTimer <= 0f)
+        // Only move legs if the horse is moving
+        if (currentSpeed > 0.1f)
         {
-            isBoosting = true;
-            boostTimer = boostDuration;
-        }
+            // Simulate horse-like leg movement by swinging the legs back and forth
+            float angle = Mathf.Sin(Time.time * legSwingSpeed) * legSwingAngle * (currentSpeed / maxSpeed);
 
-        if (isBoosting)
-        {
-            boostTimer -= Time.deltaTime;
-            if (boostTimer <= 0f)
-            {
-                isBoosting = false;
-                cooldownTimer = boostCooldown;
-            }
-        }
+            // Front legs move in opposite directions
+            frontLeftLeg.transform.localRotation = Quaternion.Euler(angle, 0f, 0f);
+            frontRightLeg.transform.localRotation = Quaternion.Euler(-angle, 0f, 0f);
 
-        if (cooldownTimer > 0f)
+            // Back legs move in opposite directions, offset by 180 degrees for a natural gait
+            backLeftLeg.transform.localRotation = Quaternion.Euler(-angle, 0f, 0f);
+            backRightLeg.transform.localRotation = Quaternion.Euler(angle, 0f, 0f);
+        }
+        else
         {
-            cooldownTimer -= Time.deltaTime;
+            // Reset leg rotation when not moving
+            frontLeftLeg.transform.localRotation = Quaternion.identity;
+            frontRightLeg.transform.localRotation = Quaternion.identity;
+            backLeftLeg.transform.localRotation = Quaternion.identity;
+            backRightLeg.transform.localRotation = Quaternion.identity;
         }
     }
 
-    void HandleBrake()
+    void CheckGrounded()
     {
-        float brakeInput = brakeAction.ReadValue<float>(); // Brake input
+        // Cast a ray downward to check for ground
+        RaycastHit hit;
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, out hit, groundCheckDistance, groundLayer);
 
-        if (brakeInput > 0)
-        {
-            // Apply braking force
-            currentSpeed = Mathf.Lerp(currentSpeed, 0f, brakeForce * Time.fixedDeltaTime);
-
-            // If fully stopped and brake is still held, start reversing
-            if (Mathf.Approximately(currentSpeed, 0f))
-            {
-                currentSpeed = Mathf.Lerp(currentSpeed, -reverseSpeed * brakeInput, acceleration * Time.fixedDeltaTime);
-            }
-        }
+        // Optional: Visualize the ground check ray in the editor
+        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, isGrounded ? Color.green : Color.red);
     }
 }
