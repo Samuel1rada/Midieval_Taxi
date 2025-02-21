@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
+    public static UIManager instance;   
     public Text moneyText;
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        if (instance == null) instance = this;
     }
 
     public void UpdateMoneyUI(int amount)
