@@ -41,7 +41,7 @@ public class SplatmapNavmesh : MonoBehaviour
                 // Check if this texture is dominant at this location
                 if (textureStrength > 0.5f)
                 {
-                    Debug.Log($"Walkable texture found at ({x},{y}) with strength {textureStrength}");
+                    // Debug.Log($"Walkable texture found at ({x},{y}) with strength {textureStrength}");
                 }
             }
         }
