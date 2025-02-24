@@ -38,7 +38,7 @@ Material:
   m_CustomRenderQueue: 2450
   stringTagMap:
     MotionVector: User
-    RenderType: TransparentCutout
+    RenderType: Opaque
   disabledShaderPasses:
   - TransparentDepthPrepass
   - TransparentDepthPostpass
@@ -120,7 +120,7 @@ Material:
     - _Metallic: 1
     - _Normal_Power: 1
     - _OpaqueCullMode: 2
-    - _QueueControl: -1
+    - _QueueControl: 1
     - _QueueOffset: 0
     - _RayTracing: 0
     - _ReceiveShadows: 1

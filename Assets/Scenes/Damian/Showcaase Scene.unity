@@ -12812,7 +12812,7 @@ GameObject:
   - component: {fileID: 1450836995}
   - component: {fileID: 1450836998}
   - component: {fileID: 1450836997}
-  - component: {fileID: 1450836996}
+  - component: {fileID: 1450836999}
   m_Layer: 5
   m_Name: Speedometer
   m_TagString: Untagged
@@ -12839,20 +12839,6 @@ RectTransform:
   m_AnchoredPosition: {x: -143.43, y: -52.79}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1450836996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1450836994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e80f24911d7a8c438af341020f6b9a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  horse: {fileID: 155120468849055900}
-  speedText: {fileID: 1450836997}
 --- !u!114 &1450836997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12952,6 +12938,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1450836994}
   m_CullTransparentMesh: 1
+--- !u!114 &1450836999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450836994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e80f24911d7a8c438af341020f6b9a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  horse: {fileID: 155120468849055900}
+  speedText: {fileID: 1450836997}
 --- !u!1 &1452162202
 GameObject:
   m_ObjectHideFlags: 0
@@ -23653,7 +23653,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3828372977837324422}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87dad09d6bc60cf4b9645f97c5680934, type: 3}
   m_Name: 
@@ -23908,7 +23908,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e6cffdbe68a05ed4a85c1ab1a0457858, type: 2}
+  - {fileID: 2100000, guid: adc86a1c744149e4ebf9f9ad3e464a50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25205,7 +25205,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: eaa6452f14e69874c846fe688cde7b27, type: 2}
+  - {fileID: 2100000, guid: c4976ecf03899a04a8d5faa68fcc1a02, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -25558,7 +25558,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   MeshItemUpdated: 1
-  selectedMeshIndex: 0
+  selectedMeshIndex: 3
   random: 0
   references:
     version: 2
@@ -26118,7 +26118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312901445197497559}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87dad09d6bc60cf4b9645f97c5680934, type: 3}
   m_Name: 
@@ -30406,7 +30406,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9e69f0b8560e90741aff6f38811f51d1, type: 2}
+  - {fileID: 2100000, guid: 5e2948538d3401c4e9b045835fad426a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30543,7 +30543,7 @@ MonoBehaviour:
     - {fileID: 2100000, guid: e06654e42f6991548a76f7ed883c3515, type: 2}
     Linked: 0
     Master: 0
-    current: 4
+    current: 1
     HasLODs: 1
     LODs:
     - {fileID: 7205927530405726439}
@@ -31570,9 +31570,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horse: {fileID: 155120468849055900}
-  walkSpeed: 3
-  trotSpeed: 6
-  gallopSpeed: 12
+  walkSpeed: 5
+  trotSpeed: 12
+  gallopSpeed: 24
 --- !u!1 &8151855307467305043
 GameObject:
   m_ObjectHideFlags: 0
