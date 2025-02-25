@@ -15,7 +15,7 @@ public class Speedometer : MonoBehaviour
             rb = horse.GetComponent<Rigidbody>(); // Get the Rigidbody component
         }
     }
-
+// D
     void Update()
     {
         if (rb != null)
