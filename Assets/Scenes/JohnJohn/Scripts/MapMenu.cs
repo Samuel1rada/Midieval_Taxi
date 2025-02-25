@@ -1,0 +1,35 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class MapMenu : MonoBehaviour
+{
+    private InputAction mapMenu;
+
+    [SerializeField] private GameObject mapMenuPrefab;
+    [SerializeField] private bool mapOpen;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
+
+}

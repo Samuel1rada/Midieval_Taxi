@@ -1,0 +1,46 @@
+{
+    "name": "InputActionJohn",
+    "maps": [
+        {
+            "name": "Map",
+            "id": "ec8eece2-0bc6-4479-919a-5df06ba553ac",
+            "actions": [
+                {
+                    "name": "Map controls",
+                    "type": "Button",
+                    "id": "b6fffab9-5b2e-4373-9698-7eb92f37d4fd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4f50b871-2c3f-4499-b678-5d197a626e14",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Map controls",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
