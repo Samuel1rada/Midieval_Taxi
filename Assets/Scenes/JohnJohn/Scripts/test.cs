@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class test : MonoBehaviour
 {
@@ -9,21 +10,44 @@ public class test : MonoBehaviour
     public float amountRemaining = 3;
     public bool timerIsRunning = false;
 
+    public bool onscreen = false;
+
     [SerializeField] private popup mypopup;  
+
 
   
     void Start()
     {
 
-        OpenPopup();  
-                      
-        mypopup.completed.onClick.AddListener(OpenClicked);  
+        OpenPopup();
+
+        //mypopup.completed.onClick.AddListener(OpenClicked);  
+        //OpenClicked();
                                                              
         mypopup.close.onClick.AddListener(CloseClicked);
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (onscreen == false)
+            {
+                owned_cash += salary;
+                mypopup.textMeshPro.text = "Current Cash: " + owned_cash.ToString();
+                //mypopup.gameObject.SetActive(true);  
+                mypopup.animator.SetTrigger("fadein");
+                Debug.Log($"New owned cash: {owned_cash}");
+                timerIsRunning = true;
+                onscreen = true;
+            }
+            else
+            {
+                onscreen = false;
+                mypopup.animator.SetTrigger("fadeout");
+            }
+        }
+
         if (timerIsRunning)
         {
             if (timeRemaining > 0)
@@ -35,7 +59,7 @@ public class test : MonoBehaviour
                 Debug.Log("Time has run out!");
                 timeRemaining = amountRemaining;
                 timerIsRunning = false;
-                mypopup.gameObject.SetActive(false);
+                //mypopup.gameObject.SetActive(false);
             }
         }
     }
@@ -54,11 +78,8 @@ public class test : MonoBehaviour
 
     private void OpenClicked()
     {
-        owned_cash += salary;  
-        mypopup.textMeshPro.text = "Current Cash: " + owned_cash.ToString();  
-        mypopup.gameObject.SetActive(true);  
-        Debug.Log($"New owned cash: {owned_cash}");
-        timerIsRunning = true;
+
+
     }
 
 }
