@@ -37,10 +37,10 @@ public class RagdollTest : MonoBehaviour
             Debug.Log($"OnTriggerEnter: {other.name} has the correct tag, enabling ragdoll.");
             EnableRagdoll();
         }
-        else
-        {
-            Debug.Log($"OnTriggerEnter: {other.name} does not have the correct tag.");
-        }
+        // else
+        // {
+        //     Debug.Log($"OnTriggerEnter: {other.name} does not have the correct tag.");
+        // }
     }
 
     // OnTriggerExit is fired when something exits the trigger area
